@@ -42,11 +42,10 @@ class App extends Component {
     this.setState({ famille })
   }
 
-  handleChange = event => {
+  handleChange = (event, id) => {
     const famille = { ...this.state.famille }
     const nom = event.target.value
-    console.log(nom)
-    famille.Membre1.nom = nom
+    famille[id].nom = nom
     this.setState({ famille })
 
   }
@@ -69,44 +68,33 @@ class App extends Component {
     const { famille, isShow } = this.state
 
     let description = null
+
     if (isShow) {
-      description = <strong>  ⎛⎝ im a Devil⎠⎞ </strong>
+      description = (<strong>  ⎛⎝ im a Devil⎠⎞ </strong>)
 
     }
 
     const liste = Object.keys(famille)
-      .map(Membre => (
+      .map(membre => (
         <Membre
-        hideName  ={() => this.hideName(Membre)}
-          age={famille[Membre].age}
-          nom={famille[Membre].nom} />
+          key={membre}
+          handleChange={event => this.handleChange(event, membre)}
+          hideName={() => this.hideName(membre)}
+          age={famille[membre].age}
+          nom={famille[membre].nom} />
       ))
     console.log(liste)
+
 
     return (
 
       <div className="App">
-        <h1>Membre de Famille :  </h1>
-        <input value={famille.Membre1.nom} onChange=
-          {this.handleChange} type='text'></input>
+        <h1>Membre de Famille   </h1>
+
         {liste}
-        <Membre
+        {/*<Membre
           nom={famille.Membre1.nom}
-          age={famille.Membre1.age} />
-        <Membre
-          nom={famille.Membre2.nom}
-          age={famille.Membre2.age} />
-        <Membre
-          nom={famille.Membre3.nom}
-          age={famille.Membre3.age} />
-        <Membre
-          nom={famille.Membre4.nom}
-          age={famille.Membre4.age} />
-        <Membre
-          nom={famille.Membre5.nom}
-          age={famille.Membre5.age} />
-
-
+          age={famille.Membre1.age} >     
 
         {description}
 
@@ -116,9 +104,9 @@ class App extends Component {
           }
 
         </button>
+        </Membre>*/}
 
-        <div>    <Button
-          ajout={() => this.handleClick(2)} />  </div>
+        <Button ajout={() => this.handleClick(2)} />
 
       </div>
 
